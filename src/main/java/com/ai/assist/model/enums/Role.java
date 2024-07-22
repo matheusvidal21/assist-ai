@@ -19,7 +19,7 @@ public enum Role {
 
     public static Role fromValue(String value){
         return Arrays.stream(Role.values())
-                .filter(r -> r.getValue().equals(value))
+                .filter(r -> r.getValue().toLowerCase().equals(value.toLowerCase()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Invalid role value: " + value));
     }

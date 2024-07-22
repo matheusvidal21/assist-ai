@@ -1,22 +1,24 @@
 package com.ai.assist.service;
 
+import com.ai.assist.dto.UpdateUserDto;
 import com.ai.assist.dto.UserDto;
+import com.ai.assist.dto.response.UserResponse;
 import com.ai.assist.model.User;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<User> findAll();
+    List<UserResponse> findAll();
 
-    User findById(Long id);
+    UserResponse findById(Long id);
 
-    User findByEmail(String email);
+    UserResponse findByEmail(String email);
 
-    User create(UserDto user);
+    UserResponse create(UserDto user);
 
     void delete(Long id);
 
-    User update(Long id, UserDto user);
+    UserResponse update(Long id, UpdateUserDto user);
 
 }

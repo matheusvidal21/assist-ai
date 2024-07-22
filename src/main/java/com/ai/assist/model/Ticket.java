@@ -21,8 +21,8 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @Column(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(nullable = false)
@@ -32,9 +32,8 @@ public class Ticket {
     @Column(nullable = false)
     private TicketStatus status = TicketStatus.OPEN;
 
-    @ManyToOne
-    @JoinColumn(name = "assigned_to_id")
-    @Column(name = "assigned_to")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assigned_to")
     private User assignedTo;
 
     @Column(name = "created_at", nullable = false, updatable = false)

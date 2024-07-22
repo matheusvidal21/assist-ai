@@ -1,23 +1,24 @@
 package com.ai.assist.service;
 
 import com.ai.assist.dto.TicketDto;
-import com.ai.assist.model.Ticket;
-import com.ai.assist.model.User;
+import com.ai.assist.dto.response.TicketResponse;
 
 import java.util.List;
 
 public interface TicketService {
 
-    List<Ticket> findAll();
+    List<TicketResponse> findAll();
 
-    Ticket findById(Long id);
+    TicketResponse findById(Long id);
 
-    List<Ticket> findByUserId(Long userId);
+    List<TicketResponse> findByUserId(Long userId);
 
-    List<Ticket> findByAssignedTo(Long assignedToId);
+    List<TicketResponse> findByAssignedTo(Long assignedToId);
 
-    Ticket create(TicketDto ticket);
+    TicketResponse create(TicketDto ticket);
 
     void delete(Long id);
+
+    TicketResponse assignTo(Long ticketId, Long userAssignedId);
 
 }

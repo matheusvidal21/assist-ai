@@ -1,6 +1,7 @@
 package com.ai.assist.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,10 +18,10 @@ public class MessageDto {
 
     private Long id;
 
-    @NotBlank(message = "FromUserId is required")
+    @NotNull(message = "FromUserId is required")
     private Long fromUserId;
 
-    @NotBlank(message = "ToUserId is required")
+    @NotNull(message = "ToUserId is required")
     private Long toUserId;
 
     @NotBlank(message = "Content is required")

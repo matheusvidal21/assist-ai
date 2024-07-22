@@ -13,21 +13,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TicketDto {
+public class AssignTicketDto {
 
-    private Long id;
+    @NotNull(message = "Ticket id is required")
+    private Long ticketId;
 
-    @NotNull(message = "User id is required")
-    private Long userId;
-
-    @NotBlank(message = "Issue is required")
-    private String issue;
+    @NotNull(message = "User id to assign is required")
+    private Long assignedTo;
 
     private String status;
 
-    private Long assignedTo;
-
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 

@@ -5,10 +5,10 @@ import lombok.Getter;
 
 public interface Routes {
 
-    String USER = "/user";
+    String USERS = "/users";
 
-    String TICKET = "/ticket";
+    String TICKETS = "/tickets";
 
-    String MESSAGE = "/message";
+    String MESSAGES = "/messages";
 
 }

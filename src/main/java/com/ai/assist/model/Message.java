@@ -20,11 +20,11 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "from_user_id")
     private User fromUser;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "to_user_id")
     private User toUser;
 
@@ -34,7 +34,7 @@ public class Message {
     @Column(nullable = false, updatable = false)
     private LocalDateTime timestamp;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_id", nullable = true)
     private Ticket ticket;
 

@@ -1,6 +1,8 @@
 package com.ai.assist.service.impl;
 
+import com.ai.assist.dto.UpdateUserDto;
 import com.ai.assist.dto.UserDto;
+import com.ai.assist.dto.response.UserResponse;
 import com.ai.assist.exception.BadRequestException;
 import com.ai.assist.exception.NotFoundException;
 import com.ai.assist.mapper.UserMapper;
@@ -28,27 +30,28 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public List<User> findAll() {
-        return this.userRepository.findAll();
+    public List<UserResponse> findAll() {
+        return this.userRepository.findAll().stream().map(UserMapper::fromEntityToResponse).toList();
     }
 
     @Override
-    public User findById(Long id) {
-        return this.userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
+    public UserResponse findById(Long id) {
+        User entity = this.userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
+        return UserMapper.fromEntityToResponse(entity);
     }
 
     @Override
-    public User findByEmail(String email){
-        return this.userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("User with email not found"));
+    public UserResponse findByEmail(String email){
+        User entity = this.userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("User with email not found"));
+        return UserMapper.fromEntityToResponse(entity);
     }
 
     @Override
-    public User create(UserDto user) {
+    public UserResponse create(UserDto user) {
         validate(user);
         User entity = UserMapper.fromDtoToEntity(user);
-        entity.setUpdatedAt(LocalDateTime.now());
         entity.setPassword(PasswordUtils.encode(user.getPassword()));
-        return this.userRepository.save(entity);
+        return UserMapper.fromEntityToResponse(this.userRepository.save(entity));
     }
 
     @Override
@@ -57,12 +60,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(Long id, UserDto user){
-        User entity = this.findById(id);
-        entity.setName(user.getName());
-        entity.setUsername(user.getUsername());
-        entity.setUpdatedAt(LocalDateTime.now());
-        entity.setRole(Role.fromValue(user.getRole()));
+    public UserResponse update(Long id, UpdateUserDto user){
+        User entity = this.userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
 
         if (!entity.getEmail().equals(user.getEmail()) && this.userRepository.findByEmail(user.getEmail()).isPresent()){
             throw new BadRequestException("Email already in use");
@@ -72,7 +71,13 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException("Username already in use");
         }
 
-        return this.userRepository.save(entity);
+        entity.setName(user.getName());
+        entity.setUsername(user.getUsername());
+        entity.setUpdatedAt(LocalDateTime.now());
+        entity.setRole(Role.fromValue(user.getRole()));
+        entity.setEmail(user.getEmail());
+
+        return UserMapper.fromEntityToResponse(this.userRepository.save(entity));
     }
 
     private void validate(UserDto user){

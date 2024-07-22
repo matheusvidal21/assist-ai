@@ -2,6 +2,7 @@
 package com.ai.assist.service.impl;
 
 import com.ai.assist.dto.MessageDto;
+import com.ai.assist.dto.response.MessageResponse;
 import com.ai.assist.exception.BadRequestException;
 import com.ai.assist.exception.NotFoundException;
 import com.ai.assist.mapper.MessageMapper;
@@ -9,6 +10,8 @@ import com.ai.assist.model.Message;
 import com.ai.assist.model.Ticket;
 import com.ai.assist.model.User;
 import com.ai.assist.repository.MessageRepository;
+import com.ai.assist.repository.TicketRepository;
+import com.ai.assist.repository.UserRepository;
 import com.ai.assist.service.MessageService;
 import com.ai.assist.service.TicketService;
 import com.ai.assist.service.UserService;
@@ -16,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -24,33 +28,35 @@ public class MessageServiceImpl implements MessageService {
     private MessageRepository messageRepository;
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
-    private TicketService ticketService;
+    private TicketRepository ticketRepository;
 
     @Override
-    public List<Message> findAll() {
-        return this.messageRepository.findAll();
+    public List<MessageResponse> findAll() {
+        return this.messageRepository.findAll().stream().map(MessageMapper::fromEntityToResponse).collect(Collectors.toList());
     }
 
     @Override
-    public Message findById(Long id) {
-        return this.messageRepository.findById(id).orElseThrow(() -> new NotFoundException("Message not found"));
+    public MessageResponse findById(Long id) {
+        Message entity = this.messageRepository.findById(id).orElseThrow(() -> new NotFoundException("Message not found"));
+        return MessageMapper.fromEntityToResponse(entity);
     }
 
     @Override
-    public Message create(MessageDto message) {
+    public MessageResponse create(MessageDto message) {
         if (message.getId() != null) {
             throw new BadRequestException("Message id must be null");
         }
 
-        User fromUser = this.userService.findById(message.getFromUserId());
-        User toUser = this.userService.findById(message.getToUserId());
-        Ticket ticket = this.ticketService.findById(message.getTicketId());
+        User fromUser = this.userRepository.findById(message.getFromUserId()).orElseThrow(() -> new NotFoundException("From user not found"));
+        User toUser = this.userRepository.findById(message.getToUserId()).orElseThrow(() -> new NotFoundException("To user not found"));
+        Ticket ticket = this.ticketRepository.findById(message.getTicketId()).orElseThrow(() -> new NotFoundException("Ticket not found"));
 
 
-        return this.messageRepository.save(MessageMapper.fromDtoToEntity(message, fromUser, toUser, ticket));
+        Message entity = this.messageRepository.save(MessageMapper.fromDtoToEntity(message, fromUser, toUser, ticket));
+        return MessageMapper.fromEntityToResponse(entity);
     }
 
     @Override
@@ -59,17 +65,17 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<Message> findByTicket(Long ticketId) {
-        return this.messageRepository.findByTicketId(ticketId);
+    public List<MessageResponse> findByTicket(Long ticketId) {
+        return this.messageRepository.findByTicketId(ticketId).stream().map(MessageMapper::fromEntityToResponse).collect(Collectors.toList());
     }
 
     @Override
-    public List<Message> findByFromUser(Long fromUserId) {
-        return this.messageRepository.findByFromUserId(fromUserId);
+    public List<MessageResponse> findByFromUser(Long fromUserId) {
+        return this.messageRepository.findByFromUserId(fromUserId).stream().map(MessageMapper::fromEntityToResponse).collect(Collectors.toList());
     }
 
     @Override
-    public List<Message> findByToUser(Long toUserId) {
-        return this.messageRepository.findByToUserId(toUserId);
+    public List<MessageResponse> findByToUser(Long toUserId) {
+        return this.messageRepository.findByToUserId(toUserId).stream().map(MessageMapper::fromEntityToResponse).collect(Collectors.toList());
     }
 }
