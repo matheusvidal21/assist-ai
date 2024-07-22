@@ -1,6 +1,8 @@
 package com.ai.assist.service.impl;
 
+import com.ai.assist.dto.TicketDto;
 import com.ai.assist.exception.NotFoundException;
+import com.ai.assist.mapper.TicketMapper;
 import com.ai.assist.model.Ticket;
 import com.ai.assist.model.User;
 import com.ai.assist.repository.TicketRepository;
@@ -31,8 +33,10 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Ticket save(Ticket ticket) {
-        return this.ticketRepository.save(ticket);
+    public Ticket create(TicketDto ticket) {
+        User user = userRepository.findById(ticket.getUserId()).orElseThrow(() -> new NotFoundException("User not found"));
+        User assignedTo = userRepository.findById(ticket.getAssignedTo()).orElseThrow(() -> new NotFoundException("Assigned user not found"));
+        return this.ticketRepository.save(TicketMapper.fromDtoToEntity(ticket, user, assignedTo));
     }
 
     @Override
@@ -40,9 +44,14 @@ public class TicketServiceImpl implements TicketService {
         this.ticketRepository.deleteById(id);
     }
 
-    public List<Ticket> findByUserId(Long id){
-        User user = this.userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
-        return this.ticketRepository.findByUser(user);
+    @Override
+    public List<Ticket> findByUserId(Long userId){
+        return this.ticketRepository.findByUserId(userId);
+    }
+
+    @Override
+    public List<Ticket> findByAssignedTo(Long assignedToId){
+        return this.ticketRepository.findByAssignedToId(assignedToId);
     }
 
 }

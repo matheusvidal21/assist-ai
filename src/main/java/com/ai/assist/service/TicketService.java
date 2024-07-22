@@ -1,5 +1,6 @@
 package com.ai.assist.service;
 
+import com.ai.assist.dto.TicketDto;
 import com.ai.assist.model.Ticket;
 import com.ai.assist.model.User;
 
@@ -11,7 +12,11 @@ public interface TicketService {
 
     Ticket findById(Long id);
 
-    Ticket save(Ticket ticket);
+    List<Ticket> findByUserId(Long userId);
+
+    List<Ticket> findByAssignedTo(Long assignedToId);
+
+    Ticket create(TicketDto ticket);
 
     void delete(Long id);
 

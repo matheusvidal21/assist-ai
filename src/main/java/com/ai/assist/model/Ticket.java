@@ -32,8 +32,10 @@ public class Ticket {
     @Column(nullable = false)
     private TicketStatus status = TicketStatus.OPEN;
 
+    @ManyToOne
+    @JoinColumn(name = "assigned_to_id")
     @Column(name = "assigned_to")
-    private String assignedTo;
+    private User assignedTo;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

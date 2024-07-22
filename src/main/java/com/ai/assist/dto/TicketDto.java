@@ -24,8 +24,7 @@ public class TicketDto {
 
     private String status;
 
-    @NotBlank(message = "Assigned to is required")
-    private String assignedTo;
+    private Long assignedTo;
 
     private LocalDateTime createdAt;
 

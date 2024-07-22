@@ -25,7 +25,7 @@ public enum TicketStatus {
         return Arrays.stream(TicketStatus.values())
                 .filter(ticketStatus -> ticketStatus.getValue().equals(value))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid value"));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid ticket value: " + value));
     }
 
 }

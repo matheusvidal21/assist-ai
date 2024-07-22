@@ -11,6 +11,8 @@ import java.util.Optional;
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
-    List<Ticket> findByUser(User user);
+    List<Ticket> findByUserId(Long userId);
+
+    List<Ticket> findByAssignedToId(Long assignedToId);
 
 }

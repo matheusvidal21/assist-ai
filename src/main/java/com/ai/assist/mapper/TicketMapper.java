@@ -10,13 +10,13 @@ public class TicketMapper {
     private TicketMapper() {
     }
 
-    public static Ticket fromDtoToEntity(TicketDto dto, User user){
+    public static Ticket fromDtoToEntity(TicketDto dto, User user, User assignedTo){
         return Ticket.builder()
                 .id(dto.getId())
                 .user(user)
                 .issue(dto.getIssue())
                 .status(TicketStatus.fromValue(dto.getStatus()))
-                .assignedTo(dto.getAssignedTo())
+                .assignedTo(assignedTo)
                 .createdAt(dto.getCreatedAt())
                 .updatedAt(dto.getUpdatedAt())
                 .build();

@@ -1,5 +1,6 @@
 package com.ai.assist.service;
 
+import com.ai.assist.dto.MessageDto;
 import com.ai.assist.model.Message;
 import com.ai.assist.model.Ticket;
 
@@ -11,8 +12,15 @@ public interface MessageService {
 
     Message findById(Long id);
 
-    Message save(Message message);
+    List<Message> findByTicket(Long ticketId);
+
+    List<Message> findByFromUser(Long fromUserId);
+
+    List<Message> findByToUser(Long toUserId);
+
+    Message create(MessageDto message);
 
     void delete(Long id);
+
 
 }

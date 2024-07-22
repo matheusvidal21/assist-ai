@@ -20,17 +20,33 @@ public class TicketController {
 
     @GetMapping
     public ResponseEntity<List<Ticket>> getAll(){
-        return ResponseEntity.ok(ticketService.findAll());
+        return ResponseEntity.ok(this.ticketService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Ticket> getById(@PathVariable Long id){
-        return ResponseEntity.ok(ticketService.findById(id));
+    public ResponseEntity<Ticket> getById(@PathVariable("id") Long id){
+        return ResponseEntity.ok(this.ticketService.findById(id));
     }
 
     @PostMapping
     public ResponseEntity<Ticket> save(@RequestBody @Valid TicketDto ticketDto){
-        return ResponseEntity.ok(ticketService.save(ticketDto));
+        return ResponseEntity.ok(this.ticketService.create(ticketDto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id){
+        this.ticketService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Ticket>> getAllByUserId(@PathVariable("id") Long id){
+        return ResponseEntity.ok(this.ticketService.findByUserId(id));
+    }
+
+    @GetMapping("/assigned-to/{id}")
+    public ResponseEntity<List<Ticket>> getAllByAssignedTo(@PathVariable("id") Long id){
+        return ResponseEntity.ok(this.ticketService.findByAssignedTo(id));
     }
 
 }

@@ -2,17 +2,26 @@ package com.ai.assist.model.enums;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+
 @Getter
 public enum Role {
 
-    ADMIN(0),
-    AGEN(1),
-    CUSTOMER(2);
+    ADMIN("Admin"),
+    AGENT("Agent"),
+    CUSTOMER("Customer");
 
-    private final int value;
+    private final String value;
 
-    Role(int value) {
+    Role(String value) {
         this.value = value;
+    }
+
+    public static Role fromValue(String value){
+        return Arrays.stream(Role.values())
+                .filter(r -> r.getValue().equals(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Invalid role value: " + value));
     }
 
 }

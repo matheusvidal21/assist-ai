@@ -1,5 +1,6 @@
 package com.ai.assist.service;
 
+import com.ai.assist.dto.UserDto;
 import com.ai.assist.model.User;
 
 import java.util.List;
@@ -10,8 +11,12 @@ public interface UserService {
 
     User findById(Long id);
 
-    User save(User user);
+    User findByEmail(String email);
+
+    User create(UserDto user);
 
     void delete(Long id);
+
+    User update(Long id, UserDto user);
 
 }

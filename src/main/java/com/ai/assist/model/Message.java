@@ -1,11 +1,17 @@
 package com.ai.assist.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "messages")
 public class Message {
@@ -27,5 +33,9 @@ public class Message {
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime timestamp;
+
+    @ManyToOne
+    @JoinColumn(name = "ticket_id", nullable = true)
+    private Ticket ticket;
 
 }
