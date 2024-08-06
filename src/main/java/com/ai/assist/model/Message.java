@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
@@ -22,11 +24,13 @@ public class Message {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "from_user_id")
+    @JoinColumn(name = "from_user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User fromUser;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "to_user_id")
+    @JoinColumn(name = "to_user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User toUser;
 
     @Column(nullable = false)

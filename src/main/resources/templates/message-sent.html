@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>New Message Notification</title>
+</head>
+<body>
+<h1>Message Sent Successfully</h1>
+<p>Dear <span th:text="${name}">[Name]</span>,</p>
+<p>You sent a new message:</p>
+<ul>
+    <li>From: <span th:text="${fromUser}">[From User]</span></li>
+    <li>To: <span th:text="${toUser}">[To User]</span></li>
+    <li>Content: <span th:text="${content}">[Content]</span></li>
+    <li th:if="${ticketName != null}">Ticket: <span th:text="${ticketName}">[Ticket Name]</span></li>
+    <li>Time: <span th:text="${time}">[Time]</span></li>
+</ul>
+</body>
+</html>

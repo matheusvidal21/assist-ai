@@ -6,8 +6,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -34,12 +37,13 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles;
 
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -51,19 +55,22 @@ public class User {
 
     public enum Values {
         ADMIN(1L),
-        USER(2L),
-        SUPPORT(3L);
+        USER(1L),
+        SUPPORT(1L);
 
         long roleId;
 
-        Values(long roleId){
+        Values(long roleId) {
             this.roleId = roleId;
         }
 
-        public long getRoleId(){
+        public long getRoleId() {
             return roleId;
         }
     }
 
+    public boolean isAdmin() {
+        return this.roles.stream().anyMatch(role -> role.getId().equals(Values.ADMIN.getRoleId()));
+    }
 
 }

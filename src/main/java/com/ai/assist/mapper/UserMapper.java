@@ -32,7 +32,7 @@ public class UserMapper {
                 .name(user.getName())
                 .username(user.getUsername())
                 .email(user.getEmail())
-                .roles(user.getRoles().stream().map(RoleMapper::fromEntityToDto).collect(Collectors.toList()))
+                .roles(user.getRoles().stream().map(RoleMapper::fromEntityToDto).toList())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
                 .build();

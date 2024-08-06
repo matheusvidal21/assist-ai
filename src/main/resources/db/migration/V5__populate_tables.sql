@@ -18,7 +18,7 @@ INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES
 -- Inserir dados na tabela tickets
 INSERT INTO `tickets` (`user_id`, `issue`, `status`, `assigned_to`) VALUES
     (2, 'Cannot access account', 'OPEN', 4),
-    (3, 'Website not loading', 'IN PROGRESS', 4);
+    (3, 'Website not loading', 'IN_PROGRESS', 4);
 
 -- Inserir dados na tabela messages
 INSERT INTO `messages` (`from_user_id`, `to_user_id`, `content`, `ticket_id`) VALUES

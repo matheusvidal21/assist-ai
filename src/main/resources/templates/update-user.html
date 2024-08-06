@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Notification</title>
+</head>
+<body>
+<h1>User Updated</h1>
+<p>Dear <span th:text="${name}">[Name]</span>,</p>
+<p>Your username has been updated successfully:</p>
+<ul>
+    <li>Username: <span th:text="${username}">[Username]</span></li>
+    <li>Updated At: <span th:text="${updatedAt}">[Updated At]</span></li>
+    <li>Roles:</li>
+    <ul>
+        <li th:each="role : ${roles}" th:text="${role}">[Role]</li>
+    </ul>
+</ul>
+</body>
+</html>

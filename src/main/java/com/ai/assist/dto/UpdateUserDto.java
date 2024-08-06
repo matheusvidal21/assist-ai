@@ -2,6 +2,7 @@ package com.ai.assist.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,7 +31,7 @@ public class UpdateUserDto {
     @NotBlank(message = "Email is required")
     private String email;
 
-    @NotBlank(message = "Roles are required")
+    @NotNull(message = "Roles are required")
     private Set<Long> rolesIds;
 
     private LocalDateTime createdAt = LocalDateTime.now();

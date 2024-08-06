@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Notification</title>
+</head>
+<body>
+<h1>Welcome to AI Assist</h1>
+<p>Dear <span th:text="${name}">[Name]</span>,</p>
+<p>Your account has been created successfully:</p>
+<ul>
+    <li>Username: <span th:text="${username}">[Username]</span></li>
+    <li>Password: <span th:text="${password}">[Password]</span></li>
+    <li>Roles:</li>
+    <ul>
+        <li th:each="role : ${roles}" th:text="${role}">[Role]</li>
+    </ul>
+</ul>
+</body>
+</html>
