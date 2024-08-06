@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -29,8 +30,8 @@ public class UpdateUserDto {
     @NotBlank(message = "Email is required")
     private String email;
 
-    @NotBlank(message = "Role is required")
-    private String role;
+    @NotBlank(message = "Roles are required")
+    private Set<Long> rolesIds;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 

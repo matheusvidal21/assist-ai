@@ -3,6 +3,7 @@ package com.ai.assist.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +11,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -34,8 +37,8 @@ public class UserDto {
     @NotBlank(message = "Email is required")
     private String email;
 
-    @NotBlank(message = "Role is required")
-    private String role;
+    @NotNull(message = "Roles are required")
+    private Set<Long> rolesIds;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 

@@ -2,14 +2,18 @@ package com.ai.assist.mapper;
 
 import com.ai.assist.dto.UserDto;
 import com.ai.assist.dto.response.UserResponse;
+import com.ai.assist.model.Role;
 import com.ai.assist.model.User;
-import com.ai.assist.model.enums.Role;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UserMapper {
 
     private UserMapper(){}
 
-    public static User fromDtoToEntity(UserDto dto){
+    public static User fromDtoToEntity(UserDto dto, Set<Role> roles){
         return User.builder()
                 .id(dto.getId())
                 .name(dto.getName())
@@ -18,7 +22,7 @@ public class UserMapper {
                 .email(dto.getEmail())
                 .createdAt(dto.getCreatedAt())
                 .updatedAt(dto.getUpdatedAt())
-                .role(Role.fromValue(dto.getRole()))
+                .roles(roles)
                 .build();
     }
 
@@ -28,7 +32,7 @@ public class UserMapper {
                 .name(user.getName())
                 .username(user.getUsername())
                 .email(user.getEmail())
-                .role(user.getRole().getValue())
+                .roles(user.getRoles().stream().map(RoleMapper::fromEntityToDto).collect(Collectors.toList()))
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
                 .build();

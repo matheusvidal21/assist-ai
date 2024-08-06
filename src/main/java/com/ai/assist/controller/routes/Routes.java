@@ -11,4 +11,6 @@ public interface Routes {
 
     String MESSAGES = "/messages";
 
+    String AUTH = "/auth";
+
 }
