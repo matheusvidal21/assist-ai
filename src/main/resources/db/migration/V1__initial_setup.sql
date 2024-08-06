@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
                                           `ticket_id` INT NULL,
                                           FOREIGN KEY (`from_user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
                                           FOREIGN KEY (`to_user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
-                                          FOREIGN KEY (`ticket_id`) REFERENCES `tickets`(`id`)
+                                          FOREIGN KEY (`ticket_id`) REFERENCES `tickets`(`id`) ON DELETE CASCADE
 );
 
 
