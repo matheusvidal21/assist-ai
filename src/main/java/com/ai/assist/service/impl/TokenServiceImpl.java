@@ -3,6 +3,7 @@ package com.ai.assist.service.impl;
 import com.ai.assist.dto.LoginDto;
 import com.ai.assist.dto.response.LoginResponse;
 import com.ai.assist.model.Role;
+import com.ai.assist.service.TokenService;
 import com.ai.assist.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +17,7 @@ import java.time.Instant;
 import java.util.stream.Collectors;
 
 @Service
-public class TokenService {
+public class TokenServiceImpl implements TokenService {
 
     @Autowired
     private JwtEncoder jwtEncoder;
@@ -27,6 +28,7 @@ public class TokenService {
     @Value("${jwt.expiration-second}")
     private Long expirationSecond;
 
+    @Override
     public LoginResponse login(LoginDto loginDto){
         var user = userService.findByUsername(loginDto.getUsername());
 

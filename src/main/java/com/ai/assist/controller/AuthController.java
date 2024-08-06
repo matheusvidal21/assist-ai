@@ -3,7 +3,7 @@ package com.ai.assist.controller;
 import com.ai.assist.controller.routes.Routes;
 import com.ai.assist.dto.LoginDto;
 import com.ai.assist.dto.response.LoginResponse;
-import com.ai.assist.service.impl.TokenService;
+import com.ai.assist.service.impl.TokenServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @Autowired
-    private TokenService tokenService;
+    private TokenServiceImpl tokenService;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginDto loginDto){
